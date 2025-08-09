@@ -55,7 +55,7 @@ export default function TaskItem({ task, tasks, setTasks, setMessagePopup }) {
             onCancel: () => { setTextInput(task.text); setEdit(false); }
         });
     }
-    function handleBlur(e) {
+    function handleBlur() {
         handleEdit();
     }
     return <li className={done ? "done" : null}>
