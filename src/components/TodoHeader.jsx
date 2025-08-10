@@ -1,3 +1,5 @@
-export default function TodoHeader() {
-    return <h2>ToDo List</h2>
+const TodoHeader = ({children}) => {
+    return <h2>{children}</h2>
 }
+
+export default TodoHeader;

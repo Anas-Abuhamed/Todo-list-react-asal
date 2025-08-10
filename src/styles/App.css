@@ -164,8 +164,9 @@ li.dragging {
 
 .alert {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     width: 350px;
     color: var(--text-color);
     background-color: var(--secondary-color);
@@ -181,24 +182,24 @@ li.dragging {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translate(-50%, -60%);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50% ,-50%);
     }
 }
 
 @keyframes fadeOut {
     from {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, -50%);
     }
 
     to {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translate(-50%, -40%);
     }
 }
 
@@ -224,10 +225,6 @@ li.dragging {
     box-shadow: 0 0 15px var(--box-shadow);
 }
 
-.popup.show {
-    display: flex !important;
-}
-
 .popup .popup-content .btn {
     padding: 10px 15px;
     background-color: var(--primary-color);
@@ -247,3 +244,23 @@ li.dragging {
 .popup .popup-content .btn:hover {
     background-color: var(--hover-color);
 }
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--primary-color);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 

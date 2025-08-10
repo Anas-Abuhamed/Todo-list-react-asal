@@ -1,11 +1,11 @@
 import TaskItem from "./TaskItem";
 
-export default function TaskList({filteredTasks, tasks, setTasks, setMessagePopup}) {
+const TaskList = ({ children }) => {
     return (
         <ul id="task-list">
-            {filteredTasks.map(task => {
-                return <TaskItem key={task.id} task={task} tasks={tasks} setTasks={setTasks} setMessagePopup={setMessagePopup} />
-            })}
+            {children}
         </ul>
     );
 }
+
+export default TaskList;

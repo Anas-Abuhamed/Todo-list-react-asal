@@ -1,31 +1,37 @@
 import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-
-export default function TaskItem({ task, tasks, setTasks, setMessagePopup }) {
+import Input from "./Input";
+const TaskItem = ({ task, tasks, setTasks, setMessagePopup }) => {
     const [done, setDone] = useState(task.done);
     const [edit, setEdit] = useState(false);
     const [textInput, setTextInput] = useState(task.text)
-
+    function resetMode() {
+        setTextInput(task.text);
+        setEdit(false);
+    }
     function handleDone() {
         setDone(!done);
+
         let editedTasks = [...tasks];
         editedTasks.forEach(targetTask => {
             if (targetTask.id === task.id)
                 targetTask.done = !done;
         });
         setTasks(editedTasks);
-        localStorage.setItem("tasks", JSON.stringify(editedTasks));
     }
     function handleKeyDown(e) {
-        e.nativeEvent.stopImmediatePropagation();
         if (e.key === "Enter") {
             e.preventDefault();
+            if (textInput.trim() === "") {
+                resetMode()
+                return;
+            }
             handleEdit();
+
         }
         else if (e.key === "Escape") {
-            setTextInput(task.text)
-            setEdit(false);
+            resetMode()
         }
     }
     function handleDelete(id) {
@@ -33,7 +39,6 @@ export default function TaskItem({ task, tasks, setTasks, setMessagePopup }) {
             text: "Are you sure you want to delete this task?",
             onConfirm: () => {
                 let newTasks = tasks.filter(task => task.id !== id);
-                localStorage.setItem("tasks", JSON.stringify(newTasks));
                 setTasks(newTasks);
             },
             onCancel: () => setEdit(false)
@@ -49,18 +54,15 @@ export default function TaskItem({ task, tasks, setTasks, setMessagePopup }) {
                     return targetTask;
                 });
                 setTasks(editedTasks);
-                localStorage.setItem("tasks", JSON.stringify(editedTasks));
                 setEdit(false);
             },
             onCancel: () => { setTextInput(task.text); setEdit(false); }
         });
     }
-    function handleBlur() {
-        handleEdit();
-    }
+
     return <li className={done ? "done" : null}>
 
-        {edit ? <input className="edit-input" type="text" value={textInput} onChange={(e) => setTextInput(e.target.value)} onBlur={handleBlur} onKeyDown={handleKeyDown} autoFocus /> : <span className="task-text">{task.text}</span>}
+        {edit ? <Input className="edit-input" type="text" value={textInput} setValue={setTextInput} keyDown={handleKeyDown} focus={true} /> : <span className="task-text">{task.text}</span>}
         <div className="actions">
             <FontAwesomeIcon icon={faCheck} className="complete" onClick={handleDone} />
             <FontAwesomeIcon icon={faEdit} className="edit" onClick={() => setEdit(!edit)} />
@@ -68,3 +70,4 @@ export default function TaskItem({ task, tasks, setTasks, setMessagePopup }) {
         </div>
     </li>
 }
+export default TaskItem
