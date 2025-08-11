@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import Button from "./Button";
-import Loader from "./Loader";
+import Button from "../global/Button";
+import Loader from "../global/Loader";
 
 const Popup = ({ message, setMessagePopup, showAlert, loading }) => {
   useEffect(() => {

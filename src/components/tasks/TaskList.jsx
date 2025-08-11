@@ -1,5 +1,3 @@
-import TaskItem from "./TaskItem";
-
 const TaskList = ({ children }) => {
     return (
         <ul id="task-list">

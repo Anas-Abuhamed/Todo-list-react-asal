@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Input from "../global/Input";
 
 const AddTask = ({ onAdd }) => {
     const [taskText, setTaskText] = useState("");
@@ -10,7 +11,7 @@ const AddTask = ({ onAdd }) => {
     }
     return <>
         <form className="add-task" onSubmit={handleAdd}>
-            <input type="text" id="task-input" placeholder="Add a new task" value={taskText} onChange={(e) => setTaskText(e.target.value)} />
+            <Input type="text" id="task-input" placeholder="Add a new task" value={taskText} setValue={setTaskText} />
             <button id="add-btn">+</button>
         </form>
     </>

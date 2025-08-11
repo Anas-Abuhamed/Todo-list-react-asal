@@ -1,7 +1,7 @@
 import { faCheck, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import Input from "./Input";
+import Input from "../global/Input";
 const TaskItem = ({ task, tasks, setTasks, setMessagePopup }) => {
     const [done, setDone] = useState(task.done);
     const [edit, setEdit] = useState(false);

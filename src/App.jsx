@@ -1,13 +1,13 @@
 // why vite 
 import { useState } from 'react'
 import './styles/App.css'
-import AddTask from './components/AddTask'
-import Container from './components/Container'
-import Popup from './components/Popup'
-import SearchTask from './components/SearchTask'
-import TaskList from './components/TaskList'
-import TodoHeader from './components/TodoHeader'
-import TaskItem from './components/TaskItem'
+import AddTask from './components/tasks/AddTask'
+import Container from './components/layout/Container'
+import Popup from './components/popup/Popup'
+import SearchTask from './components/tasks/SearchTask'
+import TaskList from './components/tasks/TaskList'
+import TodoHeader from './components/global/TodoHeader'
+import TaskItem from './components/tasks/TaskItem'
 
 const App = () => {
   const items = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
@@ -41,20 +41,36 @@ const App = () => {
       setTasks(tasks);
     }
 
+    const popupProps ={
+      message: messagePopup,
+      setMessagePopup,
+      showAlert,
+      loading: isLoading
+    }
+    const taskItemProps = {
+      tasks,
+      setTasks: updatedTasks,
+      setMessagePopup
+    }
+    const searchTaskProps = {
+      search,
+      setSearch
+    }
+
   return (
     <>
       <Container>
         <TodoHeader>ToDo List</TodoHeader>
         <AddTask onAdd={handleAdd} />
-        <SearchTask search={search} setSearch={setSearch} />
+        <SearchTask {...searchTaskProps} />
         <TaskList>
           {filteredTasks.map(task => {
-                return <TaskItem key={task.id} task={task} tasks={tasks} setTasks={updatedTasks} setMessagePopup={setMessagePopup} />
+                return <TaskItem key={task.id} task={task} {...taskItemProps} />
             })}
         </TaskList>
       </Container>
       {messagePopup.text || showAlert  || isLoading ? 
-      <Popup message={messagePopup} setMessagePopup={setMessagePopup} showAlert={showAlert} loading={isLoading} /> 
+      <Popup {...popupProps} /> 
       : null}
     </>
   )
